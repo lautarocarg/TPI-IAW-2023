@@ -1,0 +1,212 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "API de Proveedores y Servicios"
+host: ecs-services-853490585.us-east-1.elb.amazonaws.com
+schemes:
+  - "http"
+securityDefinitions:
+  bearerAuth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    description: "Coloca tu token JWT como 'Bearer <token>'"
+paths:
+  /proveedores:
+    get:
+      summary: "Obtener todos los proveedores"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Éxito al obtener proveedores"
+    post:
+      summary: "Crear un nuevo proveedor"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Datos del nuevo proveedor"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              nombre:
+                type: "string"
+              descripcion:
+                type: "string"
+      responses:
+        201:
+          description: "Proveedor creado exitosamente"
+  /proveedores/{id}:
+    get:
+      summary: "Obtener un proveedor por su ID"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor a obtener"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Éxito al obtener el proveedor por su ID"
+        400:
+          description: "No se encontró el proveedor con el ID especificado"
+    put:
+      summary: "Actualizar un proveedor por su ID"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor a actualizar"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Datos actualizados del proveedor"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              nombre:
+                type: "string"
+              descripcion:
+                type: "string"
+      responses:
+        200:
+          description: "Proveedor actualizado exitosamente"
+        400:
+          description: "No se encontró el proveedor con el ID especificado"
+    delete:
+      summary: "Eliminar un proveedor por su ID"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor a eliminar"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Proveedor eliminado exitosamente"
+        400:
+          description: "No se encontró el proveedor con el ID especificado"
+  /proveedores/{id}/servicios:
+    get:
+      summary: "Obtener todos los servicios de un proveedor"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor del que se obtienen los servicios"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Éxito al obtener los servicios del proveedor"
+    post:
+      summary: "Crear un nuevo servicio para un proveedor"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor al que se agrega el servicio"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Datos del nuevo servicio"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              nombre:
+                type: "string"
+              descripcion:
+                type: "string"
+              precio:
+                type: "number"
+      responses:
+        201:
+          description: "Servicio creado exitosamente"
+  /proveedores/{id}/servicios/{idService}:
+    get:
+      summary: "Obtener un servicio por su ID y el ID del proveedor"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor"
+          required: true
+          type: "string"
+        - in: "path"
+          name: "idService"
+          description: "ID del servicio"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Éxito al obtener el servicio por su ID y el ID del proveedor"
+        400:
+          description: "No se encontró el servicio con el ID especificado para el proveedor dado"
+    put:
+      summary: "Actualizar un servicio por su ID y el ID del proveedor"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor"
+          required: true
+          type: "string"
+        - in: "path"
+          name: "idService"
+          description: "ID del servicio a actualizar"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Datos actualizados del servicio"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              nombre:
+                type: "string"
+              descripcion:
+                type: "string"
+              precio:
+                type: "number"
+      responses:
+        200:
+          description: "Servicio actualizado exitosamente"
+        400:
+          description: "No se encontró el servicio con el ID especificado para el proveedor dado"
+    delete:
+      summary: "Eliminar un servicio por su ID y el ID del proveedor"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID del proveedor"
+          required: true
+          type: "string"
+        - in: "path"
+          name: "idService"
+          description: "ID del servicio a eliminar"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Servicio eliminado exitosamente"
+        400:
+          description: "No se encontró el servicio con el ID especificado para el proveedor dado"
